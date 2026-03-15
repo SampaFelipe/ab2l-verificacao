@@ -6,55 +6,52 @@
 <title>Verificar Embaixador — AB2L GenZ Law</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;600;700&display=swap');
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --purple: #7c3aed; --purple-light: #a855f7; --gold: #fbbf24;
-  --bg: #05000f; --bg2: #0d0020; --text: #e9d5ff; --muted: #5b21b6;
-}
-html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; display: flex; flex-direction: column; align-items: center; }
-body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
-.wrap { position: relative; z-index: 1; width: 100%; max-width: 560px; padding: 48px 24px 64px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
-.header { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.logo-hex { width: 52px; height: 52px; background: var(--purple); clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue'; font-size: 18px; color: #fff; letter-spacing: 1px; }
-.brand { font-family: 'Bebas Neue'; font-size: 28px; letter-spacing: 4px; color: #fff; }
-.brand-sub { font-size: 8px; letter-spacing: 5px; color: var(--muted); text-transform: uppercase; }
-.rule { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--purple-light), transparent); }
-.page-title { font-size: 10px; letter-spacing: 4px; color: var(--purple-light); }
-.search-box { width: 100%; background: var(--bg2); border: 1px solid #2d1060; padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; }
-.search-label { font-size: 8px; letter-spacing: 3px; color: var(--muted); }
-.search-row { display: flex; gap: 10px; }
-.search-input { flex: 1; background: #08001a; border: 1px solid #2d1060; color: var(--text); font-family: 'JetBrains Mono'; font-size: 13px; font-weight: 600; padding: 12px 14px; letter-spacing: 2px; outline: none; transition: border-color .2s; }
-.search-input::placeholder { color: #3b1d70; font-weight: 300; letter-spacing: 1px; }
-.search-input:focus { border-color: var(--purple-light); }
-.search-btn { background: var(--purple); border: none; color: #fff; font-family: 'JetBrains Mono'; font-size: 10px; font-weight: 700; letter-spacing: 2px; padding: 12px 20px; cursor: pointer; transition: all .2s; white-space: nowrap; }
-.search-btn:hover { background: var(--purple-light); }
-.search-btn:disabled { opacity: .4; cursor: not-allowed; }
-.search-hint { font-size: 8px; color: #2d1060; }
-.result { width: 100%; display: none; }
-.result.visible { display: block; }
-.result-valid { background: #010f07; border: 1px solid #064e3b; padding: 28px 24px; display: flex; flex-direction: column; gap: 18px; animation: fadeIn .3s ease; }
-.result-invalid { background: #0f0000; border: 1px solid #7f1d1d; padding: 28px 24px; text-align: center; display: flex; flex-direction: column; gap: 10px; animation: fadeIn .3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.status-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 3px; padding: 6px 14px; align-self: flex-start; }
-.status-badge.valid { background: #022c1e; border: 1px solid #065f46; color: #10b981; }
-.status-badge.invalid { background: #1f0000; border: 1px solid #991b1b; color: #f87171; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; }
-.status-dot.valid { background: #10b981; box-shadow: 0 0 6px #10b981; }
-.status-dot.invalid { background: #f87171; }
-.result-name { font-family: 'Bebas Neue'; font-size: 42px; letter-spacing: 3px; color: #fff; line-height: 1; }
-.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.result-field { display: flex; flex-direction: column; gap: 4px; }
-.result-field-label { font-size: 7px; letter-spacing: 3px; color: var(--muted); }
-.result-field-value { font-size: 11px; color: var(--text); }
-.result-field-value.highlight { color: var(--gold); }
-.result-key { font-size: 11px; font-weight: 700; color: var(--purple-light); letter-spacing: 2px; padding: 10px 12px; background: #08001a; border: 1px solid #2d1060; word-break: break-all; }
-.invalid-title { font-family: 'Bebas Neue'; font-size: 28px; color: #f87171; letter-spacing: 2px; }
-.invalid-text { font-size: 10px; color: #7f1d1d; line-height: 1.7; }
-.loading { text-align: center; padding: 28px; display: none; }
-.loading.visible { display: block; }
-.loading-text { font-size: 9px; letter-spacing: 3px; color: var(--muted); animation: pulse 1.5s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
-.footer { margin-top: auto; padding: 24px; text-align: center; font-size: 7px; letter-spacing: 2px; color: #1e0a3c; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--purple:#7c3aed;--purple-light:#a855f7;--gold:#fbbf24;--bg:#05000f;--bg2:#0d0020;--text:#e9d5ff;--muted:#5b21b6}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;display:flex;flex-direction:column;align-items:center}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,58,237,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;width:100%;max-width:560px;padding:48px 24px 64px;display:flex;flex-direction:column;align-items:center;gap:40px}
+.header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.logo-hex{width:52px;height:52px;background:var(--purple);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:18px;color:#fff;letter-spacing:1px}
+.brand{font-family:'Bebas Neue';font-size:28px;letter-spacing:4px;color:#fff}
+.brand-sub{font-size:8px;letter-spacing:5px;color:var(--muted);text-transform:uppercase}
+.rule{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--purple-light),transparent)}
+.page-title{font-size:10px;letter-spacing:4px;color:var(--purple-light)}
+.search-box{width:100%;background:var(--bg2);border:1px solid #2d1060;padding:28px 24px;display:flex;flex-direction:column;gap:14px}
+.search-label{font-size:8px;letter-spacing:3px;color:var(--muted)}
+.search-row{display:flex;gap:10px}
+.search-input{flex:1;background:#08001a;border:1px solid #2d1060;color:var(--text);font-family:'JetBrains Mono';font-size:13px;font-weight:600;padding:12px 14px;letter-spacing:2px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:#3b1d70;font-weight:300;letter-spacing:1px}
+.search-input:focus{border-color:var(--purple-light)}
+.search-btn{background:var(--purple);border:none;color:#fff;font-family:'JetBrains Mono';font-size:10px;font-weight:700;letter-spacing:2px;padding:12px 20px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.search-btn:hover{background:var(--purple-light)}
+.search-btn:disabled{opacity:.4;cursor:not-allowed}
+.search-hint{font-size:8px;color:#2d1060}
+.result{width:100%;display:none}
+.result.visible{display:block}
+.result-valid{background:#010f07;border:1px solid #064e3b;padding:28px 24px;display:flex;flex-direction:column;gap:18px;animation:fadeIn .3s ease}
+.result-invalid{background:#0f0000;border:1px solid #7f1d1d;padding:28px 24px;text-align:center;display:flex;flex-direction:column;gap:10px;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.status-badge{display:inline-flex;align-items:center;gap:8px;font-size:9px;letter-spacing:3px;padding:6px 14px;align-self:flex-start}
+.status-badge.valid{background:#022c1e;border:1px solid #065f46;color:#10b981}
+.status-badge.invalid{background:#1f0000;border:1px solid #991b1b;color:#f87171}
+.status-dot{width:6px;height:6px;border-radius:50%}
+.status-dot.valid{background:#10b981;box-shadow:0 0 6px #10b981}
+.status-dot.invalid{background:#f87171}
+.result-name{font-family:'Bebas Neue';font-size:42px;letter-spacing:3px;color:#fff;line-height:1}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.result-field{display:flex;flex-direction:column;gap:4px}
+.result-field-label{font-size:7px;letter-spacing:3px;color:var(--muted)}
+.result-field-value{font-size:11px;color:var(--text)}
+.result-field-value.highlight{color:var(--gold)}
+.result-key{font-size:11px;font-weight:700;color:var(--purple-light);letter-spacing:2px;padding:10px 12px;background:#08001a;border:1px solid #2d1060;word-break:break-all}
+.invalid-title{font-family:'Bebas Neue';font-size:28px;color:#f87171;letter-spacing:2px}
+.invalid-text{font-size:10px;color:#7f1d1d;line-height:1.7}
+.loading{text-align:center;padding:28px;display:none}
+.loading.visible{display:block}
+.loading-text{font-size:9px;letter-spacing:3px;color:var(--muted);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.footer{margin-top:auto;padding:24px;text-align:center;font-size:7px;letter-spacing:2px;color:#1e0a3c}
 </style>
 </head>
 <body>
@@ -79,11 +76,14 @@ body::before { content: ''; position: fixed; inset: 0; background-image: linear-
 </div>
 <div class="footer">AB2L GENZ LAW © 2026 — SISTEMA OFICIAL DE VERIFICAÇÃO DE EMBAIXADORES</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-const SUPABASE_URL = 'https://wkxusuncerhttgzzyxad.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndreHVzdW5jZXJodHRnenp5eGFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MDEwMzQsImV4cCI6MjA4OTE3NzAzNH0.rEsz3DRIasMQKtaGPEPskDsLtk-AXBGqBEFd2eSMLN0';
-</script>
-<script>
+const { createClient } = supabase;
+const sb = createClient(
+  'https://wkxusuncerhttgzzyxad.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndreHVzdW5jZXJodHRnenp5eGFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MDEwMzQsImV4cCI6MjA4OTE3NzAzNH0.rEsz3DRIasMQKtaGPEPskDsLtk-AXBGqBEFd2eSMLN0'
+);
+
 const input = document.getElementById('keyInput');
 const btn = document.getElementById('searchBtn');
 const resultDiv = document.getElementById('result');
@@ -97,8 +97,6 @@ window.addEventListener('load', () => {
   if(c){ input.value = c; verificar(); }
 });
 
-function normalize(s){ return s.toUpperCase().replace(/[\u00B7\.\-]/g,'·').trim(); }
-
 async function verificar(){
   const chave = input.value.trim();
   if(!chave){ input.focus(); return; }
@@ -109,23 +107,22 @@ async function verificar(){
   btn.disabled = true;
 
   try {
-    // Fetch all and compare locally to avoid encoding issues
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/embaixadores?select=nome,chave,edicao,status,criado_em`,
-      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-    );
-    const all = await res.json();
-
-    // Normalize and compare
-    const normalChave = normalize(chave);
-    const emb = all.find(r => r.chave && normalize(r.chave) === normalChave);
+    const { data, error } = await sb
+      .from('embaixadores')
+      .select('nome,chave,edicao,status,created_at')
 
     loadingDiv.classList.remove('visible');
     btn.disabled = false;
 
+    if(error) throw error;
+
+    // normalize comparison
+    const norm = s => s.toUpperCase().replace(/[\u00B7\.\-·]/g,'X');
+    const emb = data.find(r => r.chave && norm(r.chave) === norm(chave));
+
     if(emb){
       const isAtivo = emb.status === 'ativo';
-      const data = new Date(emb.criado_em).toLocaleDateString('pt-BR');
+      const dt = new Date(emb.created_at).toLocaleDateString('pt-BR');
       resultDiv.innerHTML = `
         <div class="result-valid">
           <div class="status-badge ${isAtivo?'valid':'invalid'}">
@@ -137,7 +134,7 @@ async function verificar(){
             <div class="result-field"><div class="result-field-label">PROGRAMA</div><div class="result-field-value">AB2L GenZ Law</div></div>
             <div class="result-field"><div class="result-field-label">EDIÇÃO</div><div class="result-field-value highlight">${emb.edicao}</div></div>
             <div class="result-field"><div class="result-field-label">STATUS</div><div class="result-field-value" style="color:${isAtivo?'#10b981':'#f87171'}">${isAtivo?'● Ativo':'● Inativo'}</div></div>
-            <div class="result-field"><div class="result-field-label">EMITIDO EM</div><div class="result-field-value">${data}</div></div>
+            <div class="result-field"><div class="result-field-label">EMITIDO EM</div><div class="result-field-value">${dt}</div></div>
           </div>
           <div class="result-field"><div class="result-field-label">CHAVE VERIFICADA</div><div class="result-key">${emb.chave}</div></div>
         </div>`;
@@ -150,10 +147,11 @@ async function verificar(){
         </div>`;
     }
     resultDiv.classList.add('visible');
+
   } catch(err){
     loadingDiv.classList.remove('visible');
     btn.disabled = false;
-    resultDiv.innerHTML = `<div class="result-invalid"><div class="invalid-title">ERRO DE CONEXÃO</div><div class="invalid-text">Não foi possível consultar o servidor.<br>Tente novamente em instantes.</div></div>`;
+    resultDiv.innerHTML = `<div class="result-invalid"><div class="invalid-title">ERRO DE CONEXÃO</div><div class="invalid-text">${err.message||'Tente novamente em instantes.'}</div></div>`;
     resultDiv.classList.add('visible');
   }
 }
