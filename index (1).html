@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar Embaixador — AB2L GenZ Law</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple: #7c3aed;
+  --purple-light: #a855f7;
+  --purple-glow: rgba(124,58,237,0.25);
+  --gold: #fbbf24;
+  --gold-dark: #d97706;
+  --bg: #05000f;
+  --bg2: #0d0020;
+  --bg3: #180535;
+  --text: #e9d5ff;
+  --muted: #5b21b6;
+}
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* BG grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  padding: 48px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* HEADER */
+.header { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+.logo-hex {
+  width: 52px; height: 52px;
+  background: var(--purple);
+  clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue'; font-size: 18px; color: #fff; letter-spacing: 1px;
+}
+
+.brand { font-family: 'Bebas Neue'; font-size: 28px; letter-spacing: 4px; color: #fff; }
+.brand-sub { font-size: 8px; letter-spacing: 5px; color: var(--muted); text-transform: uppercase; }
+
+.rule { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--purple-light), transparent); }
+
+.page-title { font-size: 10px; letter-spacing: 4px; color: var(--purple-light); }
+
+/* SEARCH BOX */
+.search-box {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid #2d1060;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.search-label { font-size: 8px; letter-spacing: 3px; color: var(--muted); }
+
+.search-row { display: flex; gap: 10px; }
+
+.search-input {
+  flex: 1;
+  background: #08001a;
+  border: 1px solid #2d1060;
+  color: var(--text);
+  font-family: 'JetBrains Mono';
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 14px;
+  letter-spacing: 2px;
+  outline: none;
+  transition: border-color .2s;
+  text-transform: uppercase;
+}
+.search-input::placeholder { color: #3b1d70; font-weight: 300; letter-spacing: 1px; text-transform: none; }
+.search-input:focus { border-color: var(--purple-light); }
+
+.search-btn {
+  background: var(--purple);
+  border: none;
+  color: #fff;
+  font-family: 'JetBrains Mono';
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.search-btn:hover { background: var(--purple-light); }
+.search-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.search-hint { font-size: 8px; color: #2d1060; }
+
+/* RESULT */
+.result { width: 100%; display: none; }
+.result.visible { display: block; }
+
+.result-valid {
+  background: #010f07;
+  border: 1px solid #064e3b;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fadeIn .3s ease;
+}
+
+.result-invalid {
+  background: #0f0000;
+  border: 1px solid #7f1d1d;
+  padding: 28px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  padding: 6px 14px;
+  align-self: flex-start;
+}
+.status-badge.valid { background: #022c1e; border: 1px solid #065f46; color: #10b981; }
+.status-badge.invalid { background: #1f0000; border: 1px solid #991b1b; color: #f87171; }
+
+.status-dot { width: 6px; height: 6px; border-radius: 50%; }
+.status-dot.valid { background: #10b981; box-shadow: 0 0 6px #10b981; }
+.status-dot.invalid { background: #f87171; }
+
+.result-name {
+  font-family: 'Bebas Neue';
+  font-size: 42px;
+  letter-spacing: 3px;
+  color: #fff;
+  line-height: 1;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.result-field { display: flex; flex-direction: column; gap: 4px; }
+.result-field-label { font-size: 7px; letter-spacing: 3px; color: var(--muted); }
+.result-field-value { font-size: 11px; color: var(--text); }
+.result-field-value.highlight { color: var(--gold); }
+
+.result-key {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--purple-light);
+  letter-spacing: 2px;
+  padding: 10px 12px;
+  background: #08001a;
+  border: 1px solid #2d1060;
+  word-break: break-all;
+}
+
+.invalid-title { font-family: 'Bebas Neue'; font-size: 28px; color: #f87171; letter-spacing: 2px; }
+.invalid-text { font-size: 10px; color: #7f1d1d; line-height: 1.7; }
+
+/* LOADING */
+.loading { text-align: center; padding: 28px; display: none; }
+.loading.visible { display: block; }
+.loading-text { font-size: 9px; letter-spacing: 3px; color: var(--muted); animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+/* FOOTER */
+.footer {
+  margin-top: auto;
+  padding: 24px;
+  text-align: center;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: #1e0a3c;
+}
+
+/* URL params auto-search */
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="header">
+    <div class="logo-hex">GZ</div>
+    <div class="brand">AB2L GENZ</div>
+    <div class="brand-sub">Law · Verificação Oficial</div>
+    <div class="rule"></div>
+    <div class="page-title">// VERIFICAR CREDENCIAL DE EMBAIXADOR</div>
+  </div>
+
+  <div class="search-box">
+    <div class="search-label">// INSERIR CHAVE EXCLUSIVA</div>
+    <div class="search-row">
+      <input
+        class="search-input"
+        id="keyInput"
+        type="text"
+        placeholder="ex: A7F2·C9B4·3E81·D506"
+        maxlength="23"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="search-btn" id="searchBtn" onclick="verificar()">VERIFICAR</button>
+    </div>
+    <div class="search-hint">A chave está na parte inferior da credencial do embaixador</div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="loading-text">// CONSULTANDO BASE DE DADOS...</div>
+  </div>
+
+  <div class="result" id="result"></div>
+
+</div>
+
+<div class="footer">
+  AB2L GENZ LAW © 2026 — SISTEMA OFICIAL DE VERIFICAÇÃO DE EMBAIXADORES
+</div>
+
+<!-- ======================================================
+     CONFIGURAÇÃO — substitua pelos seus valores Supabase
+     ====================================================== -->
+<script>
+  // 🔧 CONFIGURE AQUI — valores do seu projeto Supabase
+  const SUPABASE_URL = 'https://wkxusuncerhttgzzyxad.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_gd5QLNEXmVg7nFLjq29xBg_i9X8T2LE';
+</script>
+
+<script>
+const input = document.getElementById('keyInput');
+const btn   = document.getElementById('searchBtn');
+const resultDiv = document.getElementById('result');
+const loadingDiv = document.getElementById('loading');
+
+// auto-format input
+input.addEventListener('input', e => {
+  let v = e.target.value.toUpperCase().replace(/[^A-F0-9·]/g,'');
+  e.target.value = v;
+});
+
+input.addEventListener('keydown', e => {
+  if(e.key === 'Enter') verificar();
+});
+
+// check URL param on load
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(window.location.search);
+  const chave = params.get('chave') || params.get('key');
+  if(chave){ input.value = chave.toUpperCase(); verificar(); }
+});
+
+async function verificar(){
+  const chave = input.value.trim().toUpperCase();
+  if(!chave){ input.focus(); return; }
+
+  // reset
+  resultDiv.classList.remove('visible');
+  resultDiv.innerHTML = '';
+  loadingDiv.classList.add('visible');
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/embaixadores?chave=eq.${encodeURIComponent(chave)}&select=nome,chave,edicao,status,criado_em`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        }
+      }
+    );
+
+    const data = await res.json();
+
+    loadingDiv.classList.remove('visible');
+    btn.disabled = false;
+
+    if(data && data.length > 0){
+      const emb = data[0];
+      const isAtivo = emb.status === 'ativo';
+      const dataEmissao = new Date(emb.criado_em).toLocaleDateString('pt-BR');
+
+      resultDiv.innerHTML = `
+        <div class="result-valid">
+          <div class="status-badge ${isAtivo?'valid':'invalid'}">
+            <div class="status-dot ${isAtivo?'valid':'invalid'}"></div>
+            ${isAtivo ? 'EMBAIXADOR ATIVO' : 'CREDENCIAL INATIVA'}
+          </div>
+
+          <div class="result-name">${emb.nome}</div>
+
+          <div class="result-grid">
+            <div class="result-field">
+              <div class="result-field-label">PROGRAMA</div>
+              <div class="result-field-value">AB2L GenZ Law</div>
+            </div>
+            <div class="result-field">
+              <div class="result-field-label">EDIÇÃO</div>
+              <div class="result-field-value highlight">${emb.edicao}</div>
+            </div>
+            <div class="result-field">
+              <div class="result-field-label">STATUS</div>
+              <div class="result-field-value" style="color:${isAtivo?'#10b981':'#f87171'}">${isAtivo?'● Ativo':'● Inativo'}</div>
+            </div>
+            <div class="result-field">
+              <div class="result-field-label">EMITIDO EM</div>
+              <div class="result-field-value">${dataEmissao}</div>
+            </div>
+          </div>
+
+          <div class="result-field">
+            <div class="result-field-label">CHAVE VERIFICADA</div>
+            <div class="result-key">${emb.chave}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      resultDiv.innerHTML = `
+        <div class="result-invalid">
+          <div class="status-badge invalid" style="align-self:center">
+            <div class="status-dot invalid"></div>
+            NÃO ENCONTRADO
+          </div>
+          <div class="invalid-title">CREDENCIAL INVÁLIDA</div>
+          <div class="invalid-text">
+            A chave informada não corresponde a nenhum embaixador<br>
+            registrado na base oficial da AB2L GenZ Law.<br><br>
+            Verifique se a chave foi digitada corretamente<br>
+            ou entre em contato: <strong>contato@ab2l.org.br</strong>
+          </div>
+        </div>
+      `;
+    }
+
+    resultDiv.classList.add('visible');
+
+  } catch(err){
+    loadingDiv.classList.remove('visible');
+    btn.disabled = false;
+    resultDiv.innerHTML = `
+      <div class="result-invalid">
+        <div class="invalid-title">ERRO DE CONEXÃO</div>
+        <div class="invalid-text">Não foi possível consultar o servidor.<br>Tente novamente em instantes.</div>
+      </div>
+    `;
+    resultDiv.classList.add('visible');
+  }
+}
+</script>
+</body>
+</html>
