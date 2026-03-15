@@ -3,393 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verificar Embaixador — AB2L GenZ Law</title>
+<title>Admin — AB2L GenZ Law</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;600;700&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --purple: #7c3aed;
-  --purple-light: #a855f7;
-  --purple-glow: rgba(124,58,237,0.25);
-  --gold: #fbbf24;
-  --gold-dark: #d97706;
-  --bg: #05000f;
-  --bg2: #0d0020;
-  --bg3: #180535;
-  --text: #e9d5ff;
-  --muted: #5b21b6;
+  --purple: #7c3aed; --purple-light: #a855f7; --gold: #fbbf24;
+  --bg: #05000f; --bg2: #0d0020; --text: #e9d5ff; --muted: #5b21b6;
 }
+html,body { min-height:100vh; background:var(--bg); color:var(--text); font-family:'JetBrains Mono',monospace; }
+body::before { content:''; position:fixed; inset:0; background-image:linear-gradient(rgba(124,58,237,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.04) 1px,transparent 1px); background-size:40px 40px; pointer-events:none; z-index:0; }
 
-html, body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+/* LOGIN */
+.login-wrap { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
+.login-box { width:100%; max-width:380px; background:var(--bg2); border:1px solid #2d1060; padding:36px 28px; display:flex; flex-direction:column; gap:20px; }
+.login-title { font-family:'Bebas Neue'; font-size:24px; letter-spacing:3px; color:#fff; }
+.login-sub { font-size:8px; letter-spacing:3px; color:var(--muted); }
 
-/* BG grid */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
+/* MAIN */
+.main { display:none; position:relative; z-index:1; }
+.main.visible { display:block; }
 
-.wrap {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 560px;
-  padding: 48px 24px 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-}
+.topbar { background:#08001a; border-bottom:1px solid #2d1060; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; }
+.topbar-brand { font-family:'Bebas Neue'; font-size:18px; letter-spacing:3px; color:#fff; }
+.topbar-sub { font-size:8px; letter-spacing:2px; color:var(--muted); }
 
-/* HEADER */
-.header { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.content { max-width:900px; margin:0 auto; padding:32px 24px; display:flex; flex-direction:column; gap:28px; }
 
-.logo-hex {
-  width: 52px; height: 52px;
-  background: var(--purple);
-  clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue'; font-size: 18px; color: #fff; letter-spacing: 1px;
-}
+.section-title { font-size:9px; letter-spacing:3px; color:var(--muted); border-bottom:1px solid #1a0040; padding-bottom:10px; }
 
-.brand { font-family: 'Bebas Neue'; font-size: 28px; letter-spacing: 4px; color: #fff; }
-.brand-sub { font-size: 8px; letter-spacing: 5px; color: var(--muted); text-transform: uppercase; }
+/* FORM */
+.form-box { background:var(--bg2); border:1px solid #2d1060; padding:24px; display:flex; flex-direction:column; gap:14px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-field { display:flex; flex-direction:column; gap:5px; }
+.form-label { font-size:7px; letter-spacing:3px; color:var(--muted); }
+.form-input { background:#08001a; border:1px solid #2d1060; color:var(--text); font-family:'JetBrains Mono'; font-size:12px; padding:10px 12px; outline:none; transition:border-color .2s; }
+.form-input:focus { border-color:var(--purple-light); }
 
-.rule { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--purple-light), transparent); }
+/* TABLE */
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:11px; }
+th { font-size:7px; letter-spacing:3px; color:var(--muted); text-align:left; padding:10px 14px; border-bottom:1px solid #1a0040; font-weight:400; }
+td { padding:12px 14px; border-bottom:1px solid #0d0025; color:var(--text); vertical-align:middle; }
+tr:hover td { background:#08001a; }
+.badge { display:inline-block; font-size:8px; letter-spacing:1px; padding:3px 10px; }
+.badge.ativo { background:#022c1e; color:#10b981; border:1px solid #065f46; }
+.badge.inativo { background:#1f0000; color:#f87171; border:1px solid #991b1b; }
 
-.page-title { font-size: 10px; letter-spacing: 4px; color: var(--purple-light); }
+/* BUTTONS */
+.btn { font-family:'JetBrains Mono'; font-size:9px; letter-spacing:2px; padding:10px 18px; cursor:pointer; border:none; transition:all .2s; }
+.btn-primary { background:var(--purple); color:#fff; }
+.btn-primary:hover { background:var(--purple-light); }
+.btn-danger { background:transparent; color:#f87171; border:1px solid #991b1b; font-size:8px; padding:5px 10px; }
+.btn-danger:hover { background:#1f0000; }
+.btn-toggle { background:transparent; border:1px solid #2d1060; color:var(--muted); font-size:8px; padding:5px 10px; }
+.btn-toggle:hover { border-color:var(--purple-light); color:var(--purple-light); }
+.btn-logout { background:transparent; border:1px solid #2d1060; color:var(--muted); font-size:8px; letter-spacing:2px; padding:6px 14px; cursor:pointer; }
+.btn-logout:hover { border-color:#f87171; color:#f87171; }
 
-/* SEARCH BOX */
-.search-box {
-  width: 100%;
-  background: var(--bg2);
-  border: 1px solid #2d1060;
-  padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.search-label { font-size: 8px; letter-spacing: 3px; color: var(--muted); }
-
-.search-row { display: flex; gap: 10px; }
-
-.search-input {
-  flex: 1;
-  background: #08001a;
-  border: 1px solid #2d1060;
-  color: var(--text);
-  font-family: 'JetBrains Mono';
-  font-size: 13px;
-  font-weight: 600;
-  padding: 12px 14px;
-  letter-spacing: 2px;
-  outline: none;
-  transition: border-color .2s;
-  text-transform: uppercase;
-}
-.search-input::placeholder { color: #3b1d70; font-weight: 300; letter-spacing: 1px; text-transform: none; }
-.search-input:focus { border-color: var(--purple-light); }
-
-.search-btn {
-  background: var(--purple);
-  border: none;
-  color: #fff;
-  font-family: 'JetBrains Mono';
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  padding: 12px 20px;
-  cursor: pointer;
-  transition: all .2s;
-  white-space: nowrap;
-}
-.search-btn:hover { background: var(--purple-light); }
-.search-btn:disabled { opacity: .4; cursor: not-allowed; }
-
-.search-hint { font-size: 8px; color: #2d1060; }
-
-/* RESULT */
-.result { width: 100%; display: none; }
-.result.visible { display: block; }
-
-.result-valid {
-  background: #010f07;
-  border: 1px solid #064e3b;
-  padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  animation: fadeIn .3s ease;
-}
-
-.result-invalid {
-  background: #0f0000;
-  border: 1px solid #7f1d1d;
-  padding: 28px 24px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  animation: fadeIn .3s ease;
-}
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 9px;
-  letter-spacing: 3px;
-  padding: 6px 14px;
-  align-self: flex-start;
-}
-.status-badge.valid { background: #022c1e; border: 1px solid #065f46; color: #10b981; }
-.status-badge.invalid { background: #1f0000; border: 1px solid #991b1b; color: #f87171; }
-
-.status-dot { width: 6px; height: 6px; border-radius: 50%; }
-.status-dot.valid { background: #10b981; box-shadow: 0 0 6px #10b981; }
-.status-dot.invalid { background: #f87171; }
-
-.result-name {
-  font-family: 'Bebas Neue';
-  font-size: 42px;
-  letter-spacing: 3px;
-  color: #fff;
-  line-height: 1;
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-.result-field { display: flex; flex-direction: column; gap: 4px; }
-.result-field-label { font-size: 7px; letter-spacing: 3px; color: var(--muted); }
-.result-field-value { font-size: 11px; color: var(--text); }
-.result-field-value.highlight { color: var(--gold); }
-
-.result-key {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--purple-light);
-  letter-spacing: 2px;
-  padding: 10px 12px;
-  background: #08001a;
-  border: 1px solid #2d1060;
-  word-break: break-all;
-}
-
-.invalid-title { font-family: 'Bebas Neue'; font-size: 28px; color: #f87171; letter-spacing: 2px; }
-.invalid-text { font-size: 10px; color: #7f1d1d; line-height: 1.7; }
-
-/* LOADING */
-.loading { text-align: center; padding: 28px; display: none; }
-.loading.visible { display: block; }
-.loading-text { font-size: 9px; letter-spacing: 3px; color: var(--muted); animation: pulse 1.5s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
-
-/* FOOTER */
-.footer {
-  margin-top: auto;
-  padding: 24px;
-  text-align: center;
-  font-size: 7px;
-  letter-spacing: 2px;
-  color: #1e0a3c;
-}
-
-/* URL params auto-search */
+.toast { position:fixed; bottom:24px; right:24px; background:#022c1e; border:1px solid #065f46; color:#10b981; font-size:9px; letter-spacing:2px; padding:12px 20px; z-index:999; display:none; animation:fadeIn .3s ease; }
+.toast.error { background:#1f0000; border-color:#991b1b; color:#f87171; }
+.toast.visible { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-
-  <div class="header">
-    <div class="logo-hex">GZ</div>
-    <div class="brand">AB2L GENZ</div>
-    <div class="brand-sub">Law · Verificação Oficial</div>
-    <div class="rule"></div>
-    <div class="page-title">// VERIFICAR CREDENCIAL DE EMBAIXADOR</div>
-  </div>
-
-  <div class="search-box">
-    <div class="search-label">// INSERIR CHAVE EXCLUSIVA</div>
-    <div class="search-row">
-      <input
-        class="search-input"
-        id="keyInput"
-        type="text"
-        placeholder="ex: A7F2·C9B4·3E81·D506"
-        maxlength="23"
-        autocomplete="off"
-        spellcheck="false"
-      />
-      <button class="search-btn" id="searchBtn" onclick="verificar()">VERIFICAR</button>
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div>
+      <div class="login-title">AB2L GENZ ADMIN</div>
+      <div class="login-sub">// painel de gestão de embaixadores</div>
     </div>
-    <div class="search-hint">A chave está na parte inferior da credencial do embaixador</div>
+    <div class="form-field">
+      <div class="form-label">EMAIL</div>
+      <input class="form-input" id="loginEmail" type="email" placeholder="admin@ab2l.org.br" />
+    </div>
+    <div class="form-field">
+      <div class="form-label">SENHA</div>
+      <input class="form-input" id="loginPass" type="password" placeholder="••••••••" />
+    </div>
+    <button class="btn btn-primary" onclick="login()">ENTRAR</button>
   </div>
-
-  <div class="loading" id="loading">
-    <div class="loading-text">// CONSULTANDO BASE DE DADOS...</div>
-  </div>
-
-  <div class="result" id="result"></div>
-
 </div>
 
-<div class="footer">
-  AB2L GENZ LAW © 2026 — SISTEMA OFICIAL DE VERIFICAÇÃO DE EMBAIXADORES
+<!-- MAIN PANEL -->
+<div class="main" id="mainPanel">
+  <div class="topbar">
+    <div>
+      <div class="topbar-brand">AB2L GENZ LAW — ADMIN</div>
+      <div class="topbar-sub">// gestão de embaixadores</div>
+    </div>
+    <button class="btn-logout" onclick="logout()">SAIR</button>
+  </div>
+
+  <div class="content">
+
+    <div class="section-title">// ADICIONAR NOVO EMBAIXADOR</div>
+
+    <div class="form-box">
+      <div class="form-row">
+        <div class="form-field">
+          <div class="form-label">NOME COMPLETO</div>
+          <input class="form-input" id="fNome" type="text" placeholder="Nome do embaixador" />
+        </div>
+        <div class="form-field">
+          <div class="form-label">EDIÇÃO</div>
+          <input class="form-input" id="fEdicao" type="text" placeholder="#001" maxlength="5" />
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-label">CHAVE EXCLUSIVA (da credencial)</div>
+        <input class="form-input" id="fChave" type="text" placeholder="A7F2·C9B4·3E81·D506" maxlength="23" style="text-transform:uppercase;letter-spacing:2px" />
+      </div>
+      <button class="btn btn-primary" style="align-self:flex-start" onclick="adicionar()">+ CADASTRAR EMBAIXADOR</button>
+    </div>
+
+    <div class="section-title">// EMBAIXADORES CADASTRADOS</div>
+
+    <div class="table-wrap">
+      <table id="tabela">
+        <thead>
+          <tr>
+            <th>NOME</th>
+            <th>CHAVE</th>
+            <th>EDIÇÃO</th>
+            <th>STATUS</th>
+            <th>CADASTRO</th>
+            <th>AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:28px">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <!-- ======================================================
      CONFIGURAÇÃO — substitua pelos seus valores Supabase
      ====================================================== -->
 <script>
-  // 🔧 CONFIGURE AQUI — valores do seu projeto Supabase
   const SUPABASE_URL = 'COLE_AQUI_SUA_SUPABASE_URL';
   const SUPABASE_ANON_KEY = 'COLE_AQUI_SUA_SUPABASE_ANON_KEY';
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
 <script>
-const input = document.getElementById('keyInput');
-const btn   = document.getElementById('searchBtn');
-const resultDiv = document.getElementById('result');
-const loadingDiv = document.getElementById('loading');
+let authToken = localStorage.getItem('ab2l_token') || null;
 
-// auto-format input
-input.addEventListener('input', e => {
-  let v = e.target.value.toUpperCase().replace(/[^A-F0-9·]/g,'');
-  e.target.value = v;
-});
+function toast(msg, err=false){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast visible' + (err?' error':'');
+  setTimeout(()=>t.classList.remove('visible'), 3000);
+}
 
-input.addEventListener('keydown', e => {
-  if(e.key === 'Enter') verificar();
-});
-
-// check URL param on load
-window.addEventListener('load', () => {
-  const params = new URLSearchParams(window.location.search);
-  const chave = params.get('chave') || params.get('key');
-  if(chave){ input.value = chave.toUpperCase(); verificar(); }
-});
-
-async function verificar(){
-  const chave = input.value.trim().toUpperCase();
-  if(!chave){ input.focus(); return; }
-
-  // reset
-  resultDiv.classList.remove('visible');
-  resultDiv.innerHTML = '';
-  loadingDiv.classList.add('visible');
-  btn.disabled = true;
-
+async function login(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/embaixadores?chave=eq.${encodeURIComponent(chave)}&select=nome,chave,edicao,status,criado_em`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        }
-      }
+    const res = await axios.post(`${SUPABASE_URL}/auth/v1/token?grant_type=password`,
+      { email, password: pass },
+      { headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' } }
     );
-
-    const data = await res.json();
-
-    loadingDiv.classList.remove('visible');
-    btn.disabled = false;
-
-    if(data && data.length > 0){
-      const emb = data[0];
-      const isAtivo = emb.status === 'ativo';
-      const dataEmissao = new Date(emb.criado_em).toLocaleDateString('pt-BR');
-
-      resultDiv.innerHTML = `
-        <div class="result-valid">
-          <div class="status-badge ${isAtivo?'valid':'invalid'}">
-            <div class="status-dot ${isAtivo?'valid':'invalid'}"></div>
-            ${isAtivo ? 'EMBAIXADOR ATIVO' : 'CREDENCIAL INATIVA'}
-          </div>
-
-          <div class="result-name">${emb.nome}</div>
-
-          <div class="result-grid">
-            <div class="result-field">
-              <div class="result-field-label">PROGRAMA</div>
-              <div class="result-field-value">AB2L GenZ Law</div>
-            </div>
-            <div class="result-field">
-              <div class="result-field-label">EDIÇÃO</div>
-              <div class="result-field-value highlight">${emb.edicao}</div>
-            </div>
-            <div class="result-field">
-              <div class="result-field-label">STATUS</div>
-              <div class="result-field-value" style="color:${isAtivo?'#10b981':'#f87171'}">${isAtivo?'● Ativo':'● Inativo'}</div>
-            </div>
-            <div class="result-field">
-              <div class="result-field-label">EMITIDO EM</div>
-              <div class="result-field-value">${dataEmissao}</div>
-            </div>
-          </div>
-
-          <div class="result-field">
-            <div class="result-field-label">CHAVE VERIFICADA</div>
-            <div class="result-key">${emb.chave}</div>
-          </div>
-        </div>
-      `;
-    } else {
-      resultDiv.innerHTML = `
-        <div class="result-invalid">
-          <div class="status-badge invalid" style="align-self:center">
-            <div class="status-dot invalid"></div>
-            NÃO ENCONTRADO
-          </div>
-          <div class="invalid-title">CREDENCIAL INVÁLIDA</div>
-          <div class="invalid-text">
-            A chave informada não corresponde a nenhum embaixador<br>
-            registrado na base oficial da AB2L GenZ Law.<br><br>
-            Verifique se a chave foi digitada corretamente<br>
-            ou entre em contato: <strong>contato@ab2l.org.br</strong>
-          </div>
-        </div>
-      `;
-    }
-
-    resultDiv.classList.add('visible');
-
-  } catch(err){
-    loadingDiv.classList.remove('visible');
-    btn.disabled = false;
-    resultDiv.innerHTML = `
-      <div class="result-invalid">
-        <div class="invalid-title">ERRO DE CONEXÃO</div>
-        <div class="invalid-text">Não foi possível consultar o servidor.<br>Tente novamente em instantes.</div>
-      </div>
-    `;
-    resultDiv.classList.add('visible');
+    authToken = res.data.access_token;
+    localStorage.setItem('ab2l_token', authToken);
+    mostrarPainel();
+  } catch(e){
+    toast('Email ou senha incorretos', true);
   }
 }
+
+function logout(){
+  authToken = null;
+  localStorage.removeItem('ab2l_token');
+  document.getElementById('mainPanel').classList.remove('visible');
+  document.getElementById('loginWrap').style.display = 'flex';
+}
+
+function mostrarPainel(){
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('mainPanel').classList.add('visible');
+  carregar();
+}
+
+async function carregar(){
+  try {
+    const res = await axios.get(
+      `${SUPABASE_URL}/rest/v1/embaixadores?select=*&order=criado_em.desc`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${authToken}` } }
+    );
+    renderTabela(res.data);
+  } catch(e){ toast('Erro ao carregar dados', true); }
+}
+
+function renderTabela(rows){
+  const tbody = document.getElementById('tbody');
+  if(!rows.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:28px">Nenhum embaixador cadastrado</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td style="font-weight:600">${r.nome}</td>
+      <td style="color:#a855f7;letter-spacing:1px">${r.chave}</td>
+      <td style="color:#fbbf24">${r.edicao}</td>
+      <td><span class="badge ${r.status}">${r.status.toUpperCase()}</span></td>
+      <td style="color:#3b1d70">${new Date(r.criado_em).toLocaleDateString('pt-BR')}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn-toggle" onclick="toggleStatus('${r.id}','${r.status}')">
+          ${r.status==='ativo'?'DESATIVAR':'ATIVAR'}
+        </button>
+        <button class="btn-danger" onclick="excluir('${r.id}','${r.nome}')">✕</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function adicionar(){
+  const nome  = document.getElementById('fNome').value.trim();
+  const chave = document.getElementById('fChave').value.trim().toUpperCase();
+  const edicao= document.getElementById('fEdicao').value.trim();
+  if(!nome||!chave||!edicao){ toast('Preencha todos os campos', true); return; }
+  try {
+    await axios.post(
+      `${SUPABASE_URL}/rest/v1/embaixadores`,
+      { nome, chave, edicao, status: 'ativo' },
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${authToken}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' } }
+    );
+    document.getElementById('fNome').value='';
+    document.getElementById('fChave').value='';
+    document.getElementById('fEdicao').value='';
+    toast('Embaixador cadastrado!');
+    carregar();
+  } catch(e){ toast('Erro: chave pode já existir', true); }
+}
+
+async function toggleStatus(id, statusAtual){
+  const novo = statusAtual==='ativo' ? 'inativo' : 'ativo';
+  try {
+    await axios.patch(
+      `${SUPABASE_URL}/rest/v1/embaixadores?id=eq.${id}`,
+      { status: novo },
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${authToken}`, 'Content-Type': 'application/json' } }
+    );
+    toast(`Status alterado para ${novo}`);
+    carregar();
+  } catch(e){ toast('Erro ao alterar status', true); }
+}
+
+async function excluir(id, nome){
+  if(!confirm(`Remover ${nome}?`)) return;
+  try {
+    await axios.delete(
+      `${SUPABASE_URL}/rest/v1/embaixadores?id=eq.${id}`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${authToken}` } }
+    );
+    toast('Embaixador removido');
+    carregar();
+  } catch(e){ toast('Erro ao remover', true); }
+}
+
+// auto-login se tiver token
+if(authToken) mostrarPainel();
 </script>
 </body>
 </html>
